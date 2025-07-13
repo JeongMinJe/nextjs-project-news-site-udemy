@@ -31,6 +31,14 @@ export default function FilteredNewsPage({ params }) {
     newsContent = <NewsList news={news} />;
   }
 
+  if (
+    (selectedYear && !getAvailableNewsYears().includes(+selectedYear)) ||
+    (selectedMonth &&
+      !getAvailableNewsMonths(selectedYear).includes(+selectedMonth))
+  ) {
+    throw new Error("Invalid filter");
+  }
+
   return (
     <>
       <header id="archive-header">
@@ -42,7 +50,7 @@ export default function FilteredNewsPage({ params }) {
                 : `/archive/${link}`;
               return (
                 <li key={link}>
-                  <Link href={`/archive/${link}`}>{link}</Link>
+                  <Link href={href}>{link}</Link>
                 </li>
               );
             })}
